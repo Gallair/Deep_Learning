@@ -220,4 +220,4 @@ def create_model(model_url, num_classes = 10):
 import os  
 def walk_through_dir(directory_name):
   for dirpath, dirnames, filenames in os.walk(directory_name):
-  print(f"There are {len(dirnames)} directories and {len(filenames)} in the {dirpath}")
+    print(f"There are {len(dirnames)} directories and {len(filenames)} in the {dirpath}")
