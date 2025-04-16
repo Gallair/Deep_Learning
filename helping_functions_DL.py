@@ -163,7 +163,7 @@ def load_and_prep_image(filename, img_shape = 224):
 
   return img
 
-def pred_and_plot(model, file_name,class_names = class_names):
+def pred_and_plot(model, file_name,class_names):
   """
   Imports image located at file name and make prediction with model and plots the image with predicted class as the title
   """
