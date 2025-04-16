@@ -215,11 +215,9 @@ def create_model(model_url, num_classes = 10):
       feature_extractor_layer,
       layers.Dense(num_classes, activation = "softmax", name = "output_layer")
   ])
-
+  return model
+  
+import os  
 def walk_though_dir(directory_name):
   for dirpath, dirnames, filenames in os.walk(directory_name):
   print(f"There are {len(dirnames)} directories and {len(filenames)} in the {dirpath}")
-
-  
-
-  return model
