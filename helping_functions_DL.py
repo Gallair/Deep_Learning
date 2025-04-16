@@ -4,8 +4,8 @@ import random
 import zipfile
 import tensorflow as tf
 import tensorflow_hub as hub
-import mathplotlib.pltpy as plt
-import mathplotlib.image as mpimg
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 import pandas as pd
 
 from tensorflow.keras import layers
