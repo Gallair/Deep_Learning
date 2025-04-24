@@ -246,4 +246,5 @@ def plot_random_image(target_dir):
   random_image = os.path.join(target_dir, random.choice(os.listdir(target_dir)))
   img = mpimg.imread(random_image)
   plt.imshow(img)
-
+  plt.title(f"Original {target_class}")
+  plt.axis("off")
