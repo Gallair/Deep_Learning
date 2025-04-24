@@ -224,3 +224,26 @@ import os
 def walk_through_dir(directory_name):
   for dirpath, dirnames, filenames in os.walk(directory_name):
     print(f"There are {len(dirnames)} directories and {len(filenames)} in the {dirpath}")
+
+
+def plot_random_image(target_dir):
+  import matplotlib.pyplot as plt
+  import matplotlib.image as mpimg
+  import os
+  import random
+  import tensorflow as tf
+
+  IMG_SIZE = (224, 224)
+  BATCH_SIZE = 32
+  train_data = tf.keras.preprocessing.image_dataset_from_directory(directory = target_dir,
+                                                              label_mode = "categorical",
+                                                              image_size = IMG_SIZE,
+                                                              batch_size = BATCH_SIZE
+                                                              )
+
+  target_class = random.choice(train_data.class_names)
+  target_dir = target_dir + target_class
+  random_image = os.path.join(target_dir, random.choice(os.listdir(target_dir)))
+  img = mpimg.imread(random_image)
+  plt.imshow(img)
+
