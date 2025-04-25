@@ -248,3 +248,14 @@ def plot_random_image(target_dir):
   plt.imshow(img)
   plt.title(f"Original {target_class}")
   plt.axis("off")
+
+def print_model_layers(model_name):
+  for layer in model_name.layers:
+    print(layer.name, layer.trainable)
+
+def print_base_model_layers(model_name,layer_index):
+  for i, layer in enumerate(model_name.layers[layer_index].layers):
+    print(i, layer.name, layer.trainable)
+
+
+
