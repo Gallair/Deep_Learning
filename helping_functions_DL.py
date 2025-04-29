@@ -98,7 +98,8 @@ def make_confusion_matrix(y_true, y_pred, classes = None, cm_title = "Confusion 
               horizontalalignment = "center",
               color ="white" if cm[i,j] > threshold else "black",
               size = text_size)
-
+  if savefig:
+    fig.savefig("confusion_matrix.png")
 def plot_random_image(model, images, true_labels, classes):
   """
   picks a random image, plots and labels it with a prediction and truth label
