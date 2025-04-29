@@ -74,6 +74,10 @@ def make_confusion_matrix(y_true, y_pred, classes = None, cm_title = "Confusion 
   ax.xaxis.set_label_position("bottom")
   ax.xaxis.set_ticks_position("bottom")
 
+  ### Changed (plot x-labels vertically) ###
+  plt.xticks(rotation = 70, font_size = text_size)
+  plt.yticks(rotation = 0, font_size = text_size)
+
   # Adjust label size
   ax.yaxis.label.set_size(text_size)
   ax.xaxis.label.set_size(text_size)
@@ -84,10 +88,16 @@ def make_confusion_matrix(y_true, y_pred, classes = None, cm_title = "Confusion 
 
   # Plot the text on each cell
   for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
-    plt.text(j, i, f"{cm[i,j]} ({cm_norm[i,j]*100:.1f}%)",
-            horizontalalignment = "center",
-            color ="white" if cm[i,j] > threshold else "black",
-            size = text_size)
+    if norm:
+      plt.text(j, i, f"{cm[i,j]} ({cm_norm[i,j]*100:.1f}%)",
+              horizontalalignment = "center",
+              color ="white" if cm[i,j] > threshold else "black",
+              size = text_size)
+    else:
+      plt.text(j, i, f"{cm[i,j]}",
+              horizontalalignment = "center",
+              color ="white" if cm[i,j] > threshold else "black",
+              size = text_size)
 
 def plot_random_image(model, images, true_labels, classes):
   """
