@@ -313,8 +313,5 @@ def compare_histories(original_history, new_history, initial_epochs=5):
   plt.legend(loc='upper right')
   plt.title('Training and Validation Loss')
 
-def create_tensorboard(our_log_dir):
-  # %load_ext tensorboard
-  # %tensorboard --logdir our_log_dir 
 
 
