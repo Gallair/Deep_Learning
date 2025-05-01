@@ -166,20 +166,33 @@ def plot_loss_curves(history):
   plt.legend()
 
 # create the function to import an image and resize it to be able to be used with por model
-def load_and_prep_image(filename, img_shape = 224):
+def load_and_prep_image(filename, img_shape = 224, scale = True):
   """
-  Reads an image from filename, turns it in tensor and reshape it to (img_shape,img_shape, color_channel)
+    Reads in an image from filename and turns it into a Tensor and reshapes it to (img_shape, img_shape, color_channels = 3)
+    
+    Args:
+      filename (str): path to target image
+      img_shape (int): height/weight dimension of target image, default 224
+      scale (bool): whether to scale pixel values from (0, 255) to range(0, 1), default True
+
+    Returns:
+      Tensor of shape (img_shape, img_shape, 3) 
   """
-  # Read in image
+  # Read in the image file
   img = tf.io.read_file(filename)
-  # Decode the read file into tensor
-  img = tf.image.decode_image(img)
+
+  # Decode image into tensor
+  img = tf.image.decode_image(img, channels=3)
+
   # Resize the image
   img = tf.image.resize(img, size = [img_shape, img_shape])
-  # Rescale the image
-  img = img/255.
 
-  return img
+  # Scale? Yes/No
+  if scale:
+    # rescale the image (get all values between 0 and 1)
+    return img/.255
+  else:
+    return img # don't need to rescale images for EffcientNet models in TensorFlow 
 
 def pred_and_plot(model, file_name,class_names):
   """
@@ -313,5 +326,18 @@ def compare_histories(original_history, new_history, initial_epochs=5):
   plt.legend(loc='upper right')
   plt.title('Training and Validation Loss')
 
-
-
+def predict_custom_images(my_model, class_names, my_image_dir, scale = True):
+  # Make and plot custom food images and their prediction
+  
+  my_custom_images = [str(my_image_dir) + img for img in os.listdir(str(my_image_dir))]
+  
+  for img in my_custom_images:
+    img = load_and_prep_image(img, scale = False)# don;t need to scale for our EfficentNetB0 model
+    pred_prob = my_model.predict(tf.expand_dims(img, axis = 0)) # make prediction on image with shape [1 ,224, 224, 3] same shape as model trained on
+    pred_class = class_names[pred_prob.argmax()] # get the index with highest predibility
+    # print(f"Prediction class: {pred_class}")
+    # Plot the appropriate information
+    plt.figure(figsize = (10, 10))
+    plt.imshow(img/255.)
+    plt.title(f"Prediction: {pred_class}, prob: {pred_prob.max():2f}")
+    plt.axis(False);
